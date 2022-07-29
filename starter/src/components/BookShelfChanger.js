@@ -6,17 +6,17 @@ const options = [
 ]
 
 export default function BookShelfChanger({ shelf, moveBookToShelf }) {
+  const selectedShelf = shelf ?? "none";
 
   return (
     <div className="book-shelf-changer">
-      <select onChange={(e) => moveBookToShelf(e.target.value)}>
-        <option value="none" disabled>
+      <select onChange={(e) => moveBookToShelf(e.target.value)} value={selectedShelf}>
+        <option value="placeholder" disabled>
           Move to...
         </option>
         {options.map((option) => (
           <option
             value={option.value}
-            selected={option.value === shelf}
             key={option.value}
           >{option.text}</option>
         ))}

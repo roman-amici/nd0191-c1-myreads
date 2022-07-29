@@ -18,7 +18,10 @@ export default function Book({ book, moveBookToShelf }) {
           moveBookToShelf={(shelf) => moveBookToShelf(book, shelf)} />
       </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{book.authors.join("\n")}</div>
+      {book.authors ?
+        <div className="book-authors">{book.authors.join("\n")}</div> :
+        <></>
+      }
     </div>
   )
 }
