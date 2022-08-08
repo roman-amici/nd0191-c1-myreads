@@ -10,7 +10,7 @@ export default function Book({ book, moveBookToShelf }) {
             width: 128,
             height: 193,
             backgroundImage:
-              `url(${book.imageLinks.smallThumbnail})`
+              `url(${book.imageLinks?.smallThumbnail})`
           }}
         ></div>
         <BookShelfChanger

@@ -3,7 +3,7 @@ import { search } from "../BooksAPI";
 import BooksGrid from "../components/BooksGrid";
 import { Link } from "react-router-dom";
 
-export default function BooksSearch(props) {
+export default function BooksSearch({ moveBookToShelf, bookShelfLookup }) {
   const [state, setState] = useState({ query: "", books: [] });
 
   const searchForBooks = async (query) => {
@@ -33,6 +33,14 @@ export default function BooksSearch(props) {
     searchForBooks(query);
   }
 
+  // Books from search results don't come with current shelf information,
+  // so add it in before passing it to the component.
+  const booksWithShelves = state.books.map(book => (
+    bookShelfLookup[book.id]
+      ? { ...book, shelf: bookShelfLookup[book.id] }
+      : book
+  ));
+
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -53,8 +61,8 @@ export default function BooksSearch(props) {
       </div>
       <div className="search-books-results">
         <BooksGrid
-          books={state.books}
-          moveBookToShelf={props.moveBookToShelf}
+          books={booksWithShelves}
+          moveBookToShelf={moveBookToShelf}
         />
       </div>
     </div>

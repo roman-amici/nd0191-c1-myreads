@@ -1,6 +1,5 @@
 import BookShelf from "../components/BookShelf";
-import { getAll } from "../BooksAPI";
-import { useState, useEffect } from 'react';
+
 import { Link } from "react-router-dom";
 
 const shelves = [
@@ -8,37 +7,7 @@ const shelves = [
   { name: "wantToRead", title: "Want to Read" },
   { name: "read", title: "Read" }]
 
-export default function BooksDisplay({ setShowSearchpage, moveBookToShelf }) {
-
-  const [books, setBooks] = useState([]);
-  useEffect(() => {
-    const getBooks = async () => {
-      const books = await getAll();
-      setBooks(books);
-    }
-    getBooks();
-  }, []);
-
-  const replaceBook = (book, shelf) => {
-    const updatedBook = {
-      ...book,
-      shelf
-    };
-    const updatedBooks = books.map((b) => {
-      if (b.id === updatedBook.id) {
-        return updatedBook;
-      }
-      else {
-        return b;
-      }
-    });
-    setBooks(updatedBooks);
-  }
-
-  const onBookMovedToShelf = async (book, shelf) => {
-    await moveBookToShelf(book, shelf);
-    replaceBook(book, shelf);
-  }
+export default function BooksDisplay({ books, moveBookToShelf }) {
 
   return (
     <div className="list-books">
@@ -55,7 +24,7 @@ export default function BooksDisplay({ setShowSearchpage, moveBookToShelf }) {
                 books={shelfBooks}
                 key={name}
                 shelfName={name}
-                moveBookToShelf={onBookMovedToShelf} />
+                moveBookToShelf={moveBookToShelf} />
             )
           })}
         </div>
